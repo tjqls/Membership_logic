@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.membership.controller.ManagerController;
 import org.example.membership.controller.MembershipController;
 import org.example.membership.entity.Membership;
 
@@ -27,7 +28,7 @@ public class App {
                 membershipController.join();
 
             }else if(command.equals("회원확인")){
-                membershipController.list();
+                ManagerController.list();
             }else if(command.equals("로그인")){
                 membershipController.login();
             } else if(command.equals("도움말")) {

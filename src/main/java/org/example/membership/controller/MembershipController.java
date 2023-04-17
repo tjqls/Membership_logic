@@ -10,7 +10,7 @@ public class MembershipController {
 
     private int count =1;
 
-    ArrayList<Membership> memberships = new ArrayList<>();
+    static ArrayList<Membership> memberships = new ArrayList<>();
 
     public void join() {
         System.out.println("이름을 입력해주세요.");
@@ -44,16 +44,7 @@ public class MembershipController {
         count++;
     }
 
-    public void list() {
-        System.out.println("이름 / 나이 / 성별 / 생년월일 / 아이디 / 비밀번호");
-        System.out.println("-".repeat(30));
 
-        for(int i = 0; i < memberships.size(); i++){
-            Membership membership = memberships.get(i);
-            System.out.println(membership.getName() + "/" + membership.getAge() + "/" + membership.getGender() + "/" + membership.getBirth() + "/" + membership.getUserID() + "/" + membership.getPassword());
-        }
-        System.out.println("총 등록된 ID 갯수" + memberships.size());
-    }
 
     public void login(){
         System.out.println("ID를 입력해주세요.");
@@ -61,12 +52,13 @@ public class MembershipController {
         System.out.println("비밀번호를 입력해주세요.");
         String password = Container.getsc().nextLine().trim();
         String membershipUserID = findByID(userID);
+        String membershipPassword = findByPS(password);
 
 
-        if(!userID.equals(membershipUserID)){
+        if(!(userID.equals(membershipUserID)) && !(password.equals(membershipPassword))){
             System.out.println("일치하는 회원정보가 존재하지않습니다.");
             System.out.println("아이디 또는 비밀번호를 확인해주세요.");
-        }else{
+        }else if(userID.equals(membershipUserID) && password.equals(membershipPassword)){
             System.out.println("로그인 되었습니다.");
         }
 
@@ -78,6 +70,16 @@ public class MembershipController {
         for(Membership membership : memberships){
             if(membership.getUserID() .equals(userID) ){
                 return membership.getUserID();
+            }
+        }
+        return null;
+    }
+
+
+    private String findByPS(String password){
+        for(Membership membership : memberships){
+            if(membership.getPassword().equals(password)){
+                return membership.getPassword();
             }
         }
         return null;
